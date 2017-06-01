@@ -1,0 +1,46 @@
+{
+    "author": "dlevine.us",
+    "dependencies": {},
+    "keywords": [],
+    "name": "nycta-face",
+    "pebble": {
+        "displayName": "NYCTA Face",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/bt-icon.png",
+                    "name": "IMAGE_BT_ICON",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/Helvetica.ttf",
+                    "name": "HELVETICA_20",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Helvetica.ttf",
+                    "name": "HELVETICATRACKED_20",
+                    "targetPlatforms": null,
+                    "trackingAdjust": 12,
+                    "type": "font"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "uuid": "3b5a50c7-f085-4f05-97a9-1642c2dbc28f",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "0.5.0"
+}
