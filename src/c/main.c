@@ -9,7 +9,7 @@ static GFont s_time_font;
 static GFont s_font;
 static GBitmap *s_bitmap;
 static BitmapLayer *s_bitmap_layer;
-void drawTimeCircle(int posL, int posH, int Offset, GContext *ctx);
+void drawCircle(int posL, int posH, int Offset, GContext *ctx);
 void isColor(GColor watchcolor, GColor watchbw);
 
 static void update_time() {
@@ -44,7 +44,6 @@ void bt_handler(bool connected) {
 
 
 static void shape_update_proc(Layer *this_layer, GContext *ctx) {
-  
   //Get the current time as a struct
   time_t rawtime; 
   time (&rawtime); 
@@ -80,20 +79,27 @@ static void shape_update_proc(Layer *this_layer, GContext *ctx) {
   graphics_fill_rect(ctx, GRect(0, posH-11, 200, 20), 0, GCornerNone);
   //Draw the backround behind the 6th Ave lines (four horizontals)
   isColor(GColorWhite, GColorBlack);
-  graphics_fill_rect(ctx, GRect(posL-12, posH-35, 95, 45), 0, GCornerNone);
+  graphics_fill_rect(ctx, GRect(posL+11, posH-35, 72, 45), 0, GCornerNone);
   //Draw the 6th Ave lines (four horizontals)
-  isColor(GColorRajah, GColorWhite);
-  graphics_fill_rect(ctx, GRect(posL-9, 0, 20, 200), 0, GCornerNone);
-  graphics_fill_rect(ctx, GRect(posL+14, 0, 20, 200), 0, GCornerNone);
-  graphics_fill_rect(ctx, GRect(posL+37, 0, 20, 200), 0, GCornerNone);
-  graphics_fill_rect(ctx, GRect(posL+60, 0, 20, 200), 0, GCornerNone);
+  isColor(GColorOrange, GColorWhite);
+  graphics_fill_rect(ctx, GRect(posL+14, 0, 20, 250), 0, GCornerNone);
+  graphics_fill_rect(ctx, GRect(posL+37, 0, 20, 250), 0, GCornerNone);
+  graphics_fill_rect(ctx, GRect(posL+60, 0, 20, 250), 0, GCornerNone);
   //Draw TS station (AM/PM dot)
-  drawTimeCircle(posL, posH, 0, ctx);
+  drawCircle(posL, posH-23, 102, ctx);
   //Draw 6th Ave stations (four dots)
-  drawTimeCircle(posL, posH, 23, ctx);
-  drawTimeCircle(posL, posH, 45, ctx);
-  drawTimeCircle(posL, posH, 69, ctx);
-  drawTimeCircle(posL, posH-23, 102, ctx);
+  drawCircle(posL, posH, 23, ctx);
+  drawCircle(posL, posH, 45, ctx);
+  drawCircle(posL, posH, 69, ctx);
+  
+  if(hour > 9 || clock_is_24h_style()){
+    isColor(GColorWhite, GColorBlack);
+    graphics_fill_rect(ctx, GRect(posL-12, posH-35, 5, 45), 0, GCornerNone);
+    isColor(GColorOrange, GColorWhite);
+    graphics_fill_rect(ctx, GRect(posL-9, 0, 20, 250), 0, GCornerNone);
+    drawCircle(posL, posH, 0, ctx);
+  }
+  
   //Add AM/PM indicator (A or P)
   if (hour > 12){
     text_layer_set_text(s_ampm_layer, "P"); //is PM
@@ -103,7 +109,7 @@ static void shape_update_proc(Layer *this_layer, GContext *ctx) {
 };
 
 //Function to draw colored circles for 0111 - does not draw for first digit yet
-void drawTimeCircle(int posL, int posH, int Offset, GContext *ctx){
+void drawCircle(int posL, int posH, int Offset, GContext *ctx){
   //APP_LOG(APP_LOG_LEVEL_DEBUG, "Reached drawTimeCircle for %i", timeDiv);
     GPoint outerCircle = GPoint(posL + Offset, posH);
     graphics_context_set_fill_color(ctx, GColorBlack);
@@ -130,11 +136,11 @@ static void main_window_load(Window *window) {
   s_ampm_layer = text_layer_create(GRect(bounds.size.w-35, 42, 19, 20)); //Create AM/PM text
   #else
     #if defined(PBL_PLATFORM_EMERY)
-    s_time_layer = text_layer_create(GRect(-13, 156, bounds.size.w, 50));//Create hour text
-    s_text_layer = text_layer_create(GRect(117, 40, 53, 45));//Create station stop text
-    s_ampm_layer = text_layer_create(GRect(bounds.size.w-19, 55, 19, 20)); //Create AM/PM text
+    s_time_layer = text_layer_create(GRect(-15, 116, bounds.size.w, 50));//Create hour text
+    s_text_layer = text_layer_create(GRect(120, 0, 53, 45));//Create station stop text
+    s_ampm_layer = text_layer_create(GRect(bounds.size.w-19, 75, 19, 20)); //Create AM/PM text
     #else
-    s_time_layer = text_layer_create(GRect(8, bounds.size.h/2+10, 100, 21));//Create time text
+    s_time_layer = text_layer_create(GRect(10, bounds.size.h/2+10, 100, 21));//Create time text
     s_text_layer = text_layer_create(GRect(101, 99, 53, 45));//Create station stop text
     s_ampm_layer = text_layer_create(GRect(bounds.size.w-19, 55, 19, 20)); //Create AM/PM text
     #endif

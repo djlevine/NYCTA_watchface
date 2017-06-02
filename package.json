@@ -35,7 +35,8 @@
         "targetPlatforms": [
             "basalt",
             "chalk",
-            "diorite"
+            "diorite",
+            "emery"
         ],
         "uuid": "3b5a50c7-f085-4f05-97a9-1642c2dbc28f",
         "watchapp": {
