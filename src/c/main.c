@@ -81,12 +81,17 @@ static void shape_update_proc(Layer *this_layer, GContext *ctx) {
   isColor(GColorWhite, GColorBlack);
   graphics_fill_rect(ctx, GRect(posL+11, posH-35, 72, 45), 0, GCornerNone);
   //Draw the 6th Ave lines (four horizontals)
-  isColor(GColorOrange, GColorWhite);
+  isColor(GColorRajah, GColorWhite);
   graphics_fill_rect(ctx, GRect(posL+14, 0, 20, 250), 0, GCornerNone);
   graphics_fill_rect(ctx, GRect(posL+37, 0, 20, 250), 0, GCornerNone);
   graphics_fill_rect(ctx, GRect(posL+60, 0, 20, 250), 0, GCornerNone);
   //Draw TS station (AM/PM dot)
+  
+  #if defined(PBL_PLATFORM_EMERY)
+  drawCircle(posL+27, posH-23, 102, ctx);
+  #else
   drawCircle(posL, posH-23, 102, ctx);
+  #endif
   //Draw 6th Ave stations (four dots)
   drawCircle(posL, posH, 23, ctx);
   drawCircle(posL, posH, 45, ctx);
@@ -95,7 +100,7 @@ static void shape_update_proc(Layer *this_layer, GContext *ctx) {
   if(hour > 9 || clock_is_24h_style()){
     isColor(GColorWhite, GColorBlack);
     graphics_fill_rect(ctx, GRect(posL-12, posH-35, 5, 45), 0, GCornerNone);
-    isColor(GColorOrange, GColorWhite);
+    isColor(GColorRajah, GColorWhite);
     graphics_fill_rect(ctx, GRect(posL-9, 0, 20, 250), 0, GCornerNone);
     drawCircle(posL, posH, 0, ctx);
   }
@@ -137,7 +142,7 @@ static void main_window_load(Window *window) {
   #else
     #if defined(PBL_PLATFORM_EMERY)
     s_time_layer = text_layer_create(GRect(-15, 116, bounds.size.w, 50));//Create hour text
-    s_text_layer = text_layer_create(GRect(120, 0, 53, 45));//Create station stop text
+    s_text_layer = text_layer_create(GRect(130, 122, 53, 45));//Create station stop text
     s_ampm_layer = text_layer_create(GRect(bounds.size.w-19, 75, 19, 20)); //Create AM/PM text
     #else
     s_time_layer = text_layer_create(GRect(10, bounds.size.h/2+10, 100, 21));//Create time text
