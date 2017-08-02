@@ -97,7 +97,7 @@ static void shape_update_proc(Layer *this_layer, GContext *ctx) {
   drawCircle(posL, posH, 45, ctx);
   drawCircle(posL, posH, 69, ctx);
   
-  if(hour > 9 || clock_is_24h_style()){
+  if(((hour + 11) % 12 + 1) > 9 || clock_is_24h_style()){
     isColor(GColorWhite, GColorBlack);
     graphics_fill_rect(ctx, GRect(posL-12, posH-35, 5, 45), 0, GCornerNone);
     isColor(GColorRajah, GColorWhite);
